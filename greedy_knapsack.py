@@ -72,10 +72,6 @@ def greedy_knapsack(best_players, W):
     taken_positions = []
     clubs_from = []
 
-    # best_players = points_per_million(best_players)
-    # sorted_players = sorted(best_players, key=lambda x: x[6])
-
-    # best_players = points_per_million(best_players)
     sorted_players = sorted(best_players, key=lambda x: x[4])
 
     # print(np.array(sorted_players))
@@ -101,21 +97,61 @@ def greedy_knapsack(best_players, W):
             lineup_points += points
             taken_positions.append(position)
             clubs_from.append(club)
+        else:
+            break
+
+    print('lineup_price', lineup_price)
+    print('br igraca',len(lineup))
+
+    return lineup, lineup_points
+
+
+def greedy_knapsack_ppm(best_players, W):
+    lineup = []
+    lineup_price = 0
+    lineup_points = 0
+    counter = 0
+    taken_positions = []
+    clubs_from = []
+
+    best_players = points_per_million(best_players)
+    sorted_players = sorted(best_players, key=lambda x: x[6])
+
+    # print(np.array(sorted_players))
+
+    while len(sorted_players) > 0 and counter <= 11:
+        player = sorted_players.pop()
+        id, position, name, club, points, price, ppm = player
+
+        if (position == 'GK' and taken_positions.count('GK') == 1) or (
+                position == 'DEF' and taken_positions.count('DEF') == 3) \
+                or (position == 'MID' and taken_positions.count('MID') == 5) or (
+                position == 'FW' and taken_positions.count('FW') == 2) \
+                or (clubs_from.count(club) == 3):
+            continue
+
+        if (W - (price + lineup_price)) < (11 - (len(taken_positions) + 1)) * 4.5:
+            continue
+
+        if price + lineup_price <= W:
+            counter += 1
+            lineup.append(player)
+            lineup_price += price
+            lineup_points += points
+            taken_positions.append(position)
+            clubs_from.append(club)
 
         else:
             break
 
     print('lineup_price', lineup_price)
 
-
-    # for player in lineup:
-    #    player.pop()
+    for player in lineup:
+        player.pop()
 
     print('br igraca',len(lineup))
 
     return lineup, lineup_points
-
-
 
 
 
@@ -139,3 +175,6 @@ if __name__ == '__main__':
     eleven, profit = greedy_knapsack(all_players, W = INITIAL_BUDGET - money_spent(worst_4))
     print(profit)
     print(np.array(eleven))
+
+
+

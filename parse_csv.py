@@ -242,9 +242,13 @@ if __name__ == '__main__':
     # rez=knapSack_3d(W, wt, val, n)
     # print(rez)
 
-    player_indices, rez = knapsack1(W, wt, val, n, np.array(best))
-    print (rez)
+    #player_indices, rez = knapsack1(W, wt, val, n, np.array(best))
+    #print (rez)
     #for j in player_indices:
     #    print (best[j-1])
 
     # print (np.array(best))
+
+    worst_mid = df.loc[(df['Position'] == 'MID')].nsmallest(1, ['Price']).values.tolist()
+    print (worst_mid)
+
