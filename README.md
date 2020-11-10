@@ -1,2 +1,3 @@
 # FantasyFootball-Knapsack-problem
-HMO project
+
+Knapsack problem solved using combination of greedy and local search.
