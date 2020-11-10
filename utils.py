@@ -32,9 +32,6 @@ def pick_worst_4(df):
     worst_players.extend(worst_def)
 
     worst_fw = df.loc[(df['Position'] == 'FW')].nsmallest(1, ['Price']).values.tolist()
-
-    # print ('hej',worst_fw[1])
-    #worst_players.extend([worst_fw[0]])
     worst_players.extend(worst_fw)
 
     # print (np.array(worst_players))
